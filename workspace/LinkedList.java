@@ -17,8 +17,21 @@ Problem:  Write a program that keeps and manipulates a linked list of
 public class LinkedList{
 
   //instance varialbes go here (think about what you need to keep track of!)
+    String[] currentList;
 
   //constructors go here
+  public LinkList (String[] inputList){
+    String[] placeHolder = new String[inputList.length];
+    while (placeHolder[placeHolder.length - 1] != null){
+      for (i = 1; i < inputList.length; i++){
+        if (inputList[i].charAt(0) > inputList[i-1].charAt(0)){
+          placeHolder[i] = inputList[i];
+        }
+      }
+    }
+    
+    currentList = placeHolder;
+  }
 
 
   //precondition: the list has been initialized
