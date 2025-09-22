@@ -14,23 +14,15 @@ Problem:  Write a program that keeps and manipulates a linked list of
 	Output:  the results to the screen of each menu
 	    choice, and error messages where appropriate.
 */
+
 public class LinkedList{
 
   //instance varialbes go here (think about what you need to keep track of!)
-    String[] currentList;
+  ListNode head;
 
   //constructors go here
-  public LinkList (String[] inputList){
-    String[] placeHolder = new String[inputList.length];
-    while (placeHolder[placeHolder.length - 1] != null){
-      for (i = 1; i < inputList.length; i++){
-        if (inputList[i].charAt(0) > inputList[i-1].charAt(0)){
-          placeHolder[i] = inputList[i];
-        }
-      }
-    }
-    
-    currentList = placeHolder;
+  public LinkedList(){
+    head = null;
   }
 
 
@@ -38,7 +30,29 @@ public class LinkedList{
   //postcondition: the ListNode containing the appropriate value has been added and returned
   public ListNode addAValue(String line)
   {
-    return null;
+
+    // If the list is empty or the new value should be first
+    if (head == null) {
+        head = new ListNode(line, null);
+        return head;
+    }
+
+    ListNode current = head;
+    // Traverse to the node before where the new node should go
+
+    if (head.getValue().compareTo(line) > 0) {
+        ListNode newNode = new ListNode(line, head);
+        head = newNode;
+        return newNode;
+    }
+
+    while (current.getNext() != null && current.getNext().getValue().compareTo(line) < 0) {
+        current = current.getNext();
+    }
+    // Insert new node after current
+    ListNode newNode = new ListNode(line, current.getNext());
+    current.setNext(newNode);
+    return newNode;
   }
 
   //precondition: the list has been initialized
@@ -46,20 +60,35 @@ public class LinkedList{
   //if the value is not in the list returns null
   public ListNode deleteAValue(String line)
   {
-    return null;
+    ListNode current = head;
+    while(current != null){
+      if(current.getValue().equals(line)){
+        current.setNext(current.getNext().getNext());
+        return current;
+      }
+      current = current.getNext();
+    }
+
+    return current;
   }
 
   //precondition: the list has been initialized
   //postconditions: returns a string containing all values appended together with spaces between.
   public String showValues()
   {
-    return null;
+    String placeholdStringer = "";
+     ListNode current = head;
+     while(current != null){
+       placeholdStringer += current.getValue() + " ";
+       current = current.getNext();
+     }
+    return placeholdStringer;
   }
 
   //precondition: the list has been initialized
   //postconditions: clears the list.
   public void clear()
   {
-  
+    head = null;
   }
 }
