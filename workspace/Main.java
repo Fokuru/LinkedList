@@ -15,7 +15,7 @@ public class Main{
         String input= reader.readLine();
         while(!input.equals("exit"))
         {
-          if(input.length()>3 && input.substring(0, 3).equals("add"))
+          if(input.length() > 3 && input.substring(0, 3).equals("add"))
           {
             System.out.println(list.addAValue(input.substring(4)).getValue());
           }
@@ -27,9 +27,18 @@ public class Main{
               System.out.println("removing "+input.substring(7));
               System.out.println(list.deleteAValue(input.substring(7)));
           }
-          else if(input.equals("clear"))
+          else if(input.length() > 4 && input.equals("clear"))
           {
             list.clear();
+          } 
+          else if (input.length() > 6 && input.equals("reverse"))
+          {
+            list.reverse();
+          } 
+          else if (input.length() > 9 && input.substring(0, 8).equals("nReverse"))
+          {
+            int n = Integer.parseInt(input.substring(9));
+            list.nReverse(n);
           }
           else if(!input.equals("exit")){
               System.out.println("I don't know how to "+input);

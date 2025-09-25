@@ -106,4 +106,76 @@ public class LinkedList{
   {
     head = null;
   }
+
+  // precondition: the list has been initialized
+  // postconditions: reverses the list
+  public void reverse() {
+    // Edge case: if the list is empty or has only one node, no need to reverse
+    if (head == null || head.getNext() == null) return; 
+
+    // Placeholders for previous, current, and next nodes
+    ListNode prev = null;
+    ListNode current = head;
+    ListNode next = current.getNext();
+
+    // Traverse the list and reverse the links
+    while (next != null) {
+        current.setNext(prev);
+        prev = current;
+        current = next;
+        next = next.getNext();
+    }
+
+    // Final adjustment for the last node
+    current.setNext(prev);
+    head = current;
+
+    // Print the reversed list
+    showValues();
+  }
+
+  // precondition: the list has been initialized
+  // postconditions: reverses the list in groups of n
+  public void nReverse(int n) {
+    // Edge case: if n is less than or equal to 1, no need to reverse
+    if (n <= 1 || head == null) return;
+
+    // Place holders for dummy node and previous group end
+    ListNode dummy = new ListNode("", head);
+    ListNode groupPrev = dummy;
+
+    // Traverse the list in groups of n and reverse each group
+    while (true) {
+      // Check if there are at least n nodes left to reverse
+        ListNode kth = groupPrev;
+        for (int i = 0; i < n && kth != null; i++) {
+            kth = kth.getNext();
+        }
+        if (kth == null) break;
+
+        // Reverse the group
+        ListNode groupNext = kth.getNext();
+        ListNode prev = groupNext;
+        ListNode current = groupPrev.getNext();
+
+        // Reverse the nodes in the current group
+        while (current != groupNext) {
+            ListNode temp = current.getNext();
+            current.setNext(prev);
+            prev = current;
+            current = temp;
+        }
+
+        // Connect the previous group to the reversed group
+        ListNode temp = groupPrev.getNext();
+        groupPrev.setNext(kth);
+        groupPrev = temp;
+    }
+
+    // Update head to the new front of the list
+    head = dummy.getNext();
+    
+    // Print the n-reversed list
+    showValues();
+  }
 }
