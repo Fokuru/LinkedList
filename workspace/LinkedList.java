@@ -1,3 +1,5 @@
+// By: Raley Wilkin
+// Date: 9/25/2025
 /*
 Problem:  Write a program that keeps and manipulates a linked list of
 	    String data. The data will be provided by the user one item at a time.
@@ -31,25 +33,27 @@ public class LinkedList{
   public ListNode addAValue(String line)
   {
 
-    // If the list is empty or the new value should be first
+    // If the list is empty, put new line there
     if (head == null) {
         head = new ListNode(line, null);
         return head;
     }
 
     ListNode current = head;
-    // Traverse to the node before where the new node should go
-
+    
+    // If the new line comes before the head in alphabetical order, put new line at the front
     if (head.getValue().compareTo(line) > 0) {
         ListNode newNode = new ListNode(line, head);
         head = newNode;
         return newNode;
     }
 
+    // Traverse the list to find the correct insertion point by alphabetical order, put new line there
     while (current.getNext() != null && current.getNext().getValue().compareTo(line) < 0) {
         current = current.getNext();
     }
-    // Insert new node after current
+
+    // Insert new node at end if all previous nodes are alphabetically before it
     ListNode newNode = new ListNode(line, current.getNext());
     current.setNext(newNode);
     return newNode;
@@ -60,16 +64,27 @@ public class LinkedList{
   //if the value is not in the list returns null
   public ListNode deleteAValue(String line)
   {
-    ListNode current = head;
-    while(current != null){
-      if(current.getValue().equals(line)){
-        current.setNext(current.getNext().getNext());
-        return current;
-      }
-      current = current.getNext();
+    // Special case: head needs to be removed
+    if (head == null) return null;
+    if (head.getValue().equals(line)) {
+        ListNode removed = head;
+        head = head.getNext();
+        removed.setNext(null); // unlink
+        return head;
     }
 
-    return current;
+    ListNode prev = head;
+    ListNode current = head.getNext();
+    while (current != null) {
+        if (current.getValue().equals(line)) {
+            prev.setNext(current.getNext());
+            current.setNext(null); // unlink
+            return prev;
+        }
+        prev = current;
+        current = current.getNext();
+    }
+    return null;
   }
 
   //precondition: the list has been initialized
