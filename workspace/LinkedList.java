@@ -130,8 +130,7 @@ public class LinkedList{
     current.setNext(prev);
     head = current;
 
-    // Print the reversed list
-    showValues();
+    
   }
 
   // precondition: the list has been initialized
@@ -175,7 +174,6 @@ public class LinkedList{
     // Update head to the new front of the list
     head = dummy.getNext();
     
-    // Print the n-reversed list
-    showValues();
+    
   }
 }
